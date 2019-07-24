@@ -1,4 +1,4 @@
-namespace salary.dal
+namespace salary.domain
 {
     public class OfficeEmployee : EmployeeBase
     {
