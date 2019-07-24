@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "salary.domain", "salary.dom
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "salary.service", "salary.service\salary.service.csproj", "{15F4AAFB-7B74-4633-BC5A-ECF63478A5C9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "salary.dto", "salary.dto\salary.dto.csproj", "{9E2B9511-F08B-44BC-8231-673ACEB8D806}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,5 +27,9 @@ Global
 		{15F4AAFB-7B74-4633-BC5A-ECF63478A5C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15F4AAFB-7B74-4633-BC5A-ECF63478A5C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15F4AAFB-7B74-4633-BC5A-ECF63478A5C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E2B9511-F08B-44BC-8231-673ACEB8D806}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E2B9511-F08B-44BC-8231-673ACEB8D806}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E2B9511-F08B-44BC-8231-673ACEB8D806}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E2B9511-F08B-44BC-8231-673ACEB8D806}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
