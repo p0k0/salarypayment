@@ -1,8 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# 
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "salary.dal", "salary.dal\salary.dal.csproj", "{459B98D6-A85F-49E7-8456-D2319C7F61BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{459B98D6-A85F-49E7-8456-D2319C7F61BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{459B98D6-A85F-49E7-8456-D2319C7F61BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{459B98D6-A85F-49E7-8456-D2319C7F61BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{459B98D6-A85F-49E7-8456-D2319C7F61BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
