@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "salary.dal", "salary.dal\sa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "salary.domain", "salary.domain\salary.domain.csproj", "{CCF94EE8-0A94-4E0A-80D5-21910E851CC1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "salary.service", "salary.service\salary.service.csproj", "{15F4AAFB-7B74-4633-BC5A-ECF63478A5C9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,5 +21,9 @@ Global
 		{CCF94EE8-0A94-4E0A-80D5-21910E851CC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CCF94EE8-0A94-4E0A-80D5-21910E851CC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CCF94EE8-0A94-4E0A-80D5-21910E851CC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15F4AAFB-7B74-4633-BC5A-ECF63478A5C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15F4AAFB-7B74-4633-BC5A-ECF63478A5C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15F4AAFB-7B74-4633-BC5A-ECF63478A5C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15F4AAFB-7B74-4633-BC5A-ECF63478A5C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -4,7 +4,7 @@ namespace salary.domain
     {
         public override double CalculateSalary()
         {
-            throw new System.NotImplementedException();
+            return Rate;
         }
     }
 }
