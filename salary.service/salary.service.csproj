@@ -2,7 +2,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\salary.dal\salary.dal.csproj" />
+    <ProjectReference Include="..\salary.domain\salary.domain.csproj" />
     <ProjectReference Include="..\salary.dto\salary.dto.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="8.1.1" />
   </ItemGroup>
 
   <PropertyGroup>

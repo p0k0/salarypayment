@@ -29,7 +29,7 @@ namespace salary.dal.repository.command
             {
                 Name = dataReader[Employee.cName].ToString(),
                 Rate = Decimal.ToDouble(dataReader.GetDecimal(dataReader[Salary.cRate].ToString())),
-                Kind = dataReader[EmployeePaymentKind.cKind].ToString()
+                Kind = dataReader[Salary.cKind].ToString()
             };
 
             Result = result; 

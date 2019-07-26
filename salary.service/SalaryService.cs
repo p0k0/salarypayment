@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using AutoMapper;
 using salary.dal;
+using salary.domain;
 using salary.service.command;
 
 namespace salary.service
@@ -7,32 +9,44 @@ namespace salary.service
     public class SalaryService : ISalaryService
     {
         private readonly IRepository _repository;
+        private IMapper _mapper;
 
         public SalaryService(IRepository repository)
         {
             _repository = repository;
+            ConfigureMapper();
+        }
+
+        private void ConfigureMapper()
+        {
+            var config = new MapperConfiguration(_ =>
+            {
+                _.CreateMap<salary.dto.Employee, EmployeeBase>();
+                _.CreateMap<salary.dto.Employee, EmployeeBase>().ReverseMap();
+            });
+            _mapper = new Mapper(config);
         }
         
-        public salary.dto.Employee Get(string name)
+        public EmployeeBase Get(string name)
         {
             var cmd = new GetEmployeeCommand(name, _repository);
             cmd.Execute();
-            return cmd.Result;
+            return _mapper.Map<salary.dto.Employee, EmployeeBase>(cmd.Result);
         }
 
-        public bool Save(salary.dto.Employee employee)
+        public bool Save(EmployeeBase employee)
         {
-            var cmd = new SaveEmployeeCommand(employee, _repository);
+            var cmd = new SaveEmployeeCommand(_mapper.Map<EmployeeBase, salary.dto.Employee>(employee), _repository);
             cmd.Execute();
             return cmd.IsSuccess;
         }
 
-        public IEnumerable<salary.dto.Employee> GetMany(int skip, int limit)
+        public IEnumerable<EmployeeBase> GetMany(int skip, int limit)
         {
             throw new System.NotImplementedException();
         }
 
-        public salary.dto.Employee GetMostExpensiveEmployee(short kind)
+        public EmployeeBase GetMostExpensiveEmployee(short kind)
         {
             throw new System.NotImplementedException();
         }

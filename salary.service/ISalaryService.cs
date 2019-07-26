@@ -1,13 +1,14 @@
 using System.Collections.Generic;
+using salary.domain;
 
 namespace salary.service
 {
     public interface ISalaryService
     {
-        salary.dto.Employee Get(string name);
-        bool Save(salary.dto.Employee employee);
-        IEnumerable<salary.dto.Employee> GetMany(int skip, int limit);
-        salary.dto.Employee GetMostExpensiveEmployee(short kind);
+        EmployeeBase Get(string name);
+        bool Save(EmployeeBase employee);
+        IEnumerable<EmployeeBase> GetMany(int skip, int limit);
+        EmployeeBase GetMostExpensiveEmployee(short kind);
         double GetMonthlyCost();
     }
 }
