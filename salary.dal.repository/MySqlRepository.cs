@@ -11,9 +11,7 @@ namespace salary.dal.repository
         private readonly string _connectionString;
         private MySqlConnection _connection;
 
-        private static string _saveEmployeeProcedureName = "save_employee";
-        private static string _getEmployeeProcedureName = "get_employee";
-        
+
         public MySQLRepository(string connectionString)
         {
             Contract.Assume(!string.IsNullOrEmpty(connectionString));
@@ -24,26 +22,34 @@ namespace salary.dal.repository
 
         public dto.Employee Get(string name)
         {
-            Connection.Open();
-            var cmd = new MySqlCommand(_getEmployeeProcedureName, _connection);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@name", name);
+            var cmd = new GetEmployeeCommand(name, _connection);
+            try
+            {
+                cmd.Execute();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
 
-            var result = new dto.Employee();
-            var dataReader = cmd.ExecuteReader();
-            dataReader.Read();
-
-
-            result.Name = dataReader[Employee.cName].ToString();
-            result.Rate = Decimal.ToDouble(dataReader.GetDecimal(dataReader[Salary.cRate].ToString()));
-            result.Kind = dataReader[EmployeePaymentKind.cKind].ToString();
-
-            return result;
+            return cmd.Result;
         }
 
-        public void Save(dto.Employee employee)
+        public bool Save(dto.Employee employee)
         {
-            throw new System.NotImplementedException();
+            var cmd = new SaveEmployeeCommand(employee, _connection);
+            try
+            {
+                cmd.Execute();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+            return cmd.IsSuccess;
         }
 
         public IEnumerable<dto.Employee> GetMany(int skip, int limit)
