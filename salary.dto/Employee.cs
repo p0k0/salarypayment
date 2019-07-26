@@ -6,6 +6,6 @@ namespace salary.dto
     {
         public string Name { get; set; }
         public double Rate { get; set; }
-        public short Kind { get; set; }
+        public string Kind { get; set; }
     }
 }

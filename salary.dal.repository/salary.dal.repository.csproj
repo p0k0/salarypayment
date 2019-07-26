@@ -2,7 +2,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\salary.dal\salary.dal.csproj" />
-    <ProjectReference Include="..\salary.dto\salary.dto.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MySql.Data" Version="8.0.17" />
   </ItemGroup>
 
   <PropertyGroup>
