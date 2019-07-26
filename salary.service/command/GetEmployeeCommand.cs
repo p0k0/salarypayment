@@ -1,10 +1,10 @@
 using salary.dal;
 
-namespace salary.service
+namespace salary.service.command
 {
-    public sealed class GetEmployee : Command
+    public sealed class GetEmployeeCommand : Command
     {
-        public salary.dto.Employee Employee
+        public salary.dto.Employee Result
         {
             get
             {
@@ -16,7 +16,7 @@ namespace salary.service
                 return _employee;
             }
         }
-        public GetEmployee(IRepository repository, string name) : base(repository)
+        public GetEmployeeCommand(string name, IRepository repository) : base(repository)
         {
             _name = name;
         }

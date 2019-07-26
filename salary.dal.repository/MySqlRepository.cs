@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics.Contracts;
 using MySql.Data.MySqlClient;
+using salary.dal.repository.command;
 
 namespace salary.dal.repository
 {

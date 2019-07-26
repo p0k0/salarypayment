@@ -1,7 +1,7 @@
 using System;
 using salary.dal;
 
-namespace salary.service
+namespace salary.service.command
 {
     public class Command
     {
