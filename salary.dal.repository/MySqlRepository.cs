@@ -1,19 +1,18 @@
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Diagnostics.Contracts;
 using MySql.Data.MySqlClient;
-using salary.dal.repository.command;
+using salary.dal.repository.commands;
 
 namespace salary.dal.repository
 {
-    public class MySQLRepository : IRepository
+    public sealed class MySqlRepository : IRepository
     {
         private readonly string _connectionString;
         private MySqlConnection _connection;
 
 
-        public MySQLRepository(string connectionString)
+        public MySqlRepository(string connectionString)
         {
             Contract.Assume(!string.IsNullOrEmpty(connectionString));
             _connectionString = connectionString;

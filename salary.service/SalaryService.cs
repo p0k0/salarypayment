@@ -6,7 +6,7 @@ using salary.service.command;
 
 namespace salary.service
 {
-    public class SalaryService : ISalaryService
+    public sealed class SalaryService : ISalaryService
     {
         private readonly IRepository _repository;
         private IMapper _mapper;

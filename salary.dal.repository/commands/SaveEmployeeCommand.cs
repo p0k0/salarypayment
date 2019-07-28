@@ -1,7 +1,7 @@
 using System.Data;
 using MySql.Data.MySqlClient;
 
-namespace salary.dal.repository.command
+namespace salary.dal.repository.commands
 {
     public class SaveEmployeeCommand : DbCommand
     {
