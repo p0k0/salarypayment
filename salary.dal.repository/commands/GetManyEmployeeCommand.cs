@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using MySql.Data.MySqlClient;
 using salary.dal.repository.events;
@@ -10,9 +12,10 @@ namespace salary.dal.repository.commands
         private readonly long _offset;
         private readonly long _limit;
         private readonly StringBuilder _stringBuilder;
+        private LinkedList<dto.Employee> _employees;
 
-        public event EventHandler<EmployeeEventArg> EmployeeRecieved;
-
+        public LinkedList<dto.Employee> Employees => _employees;
+        
         public GetManyEmployeeCommand(long offset, long limit, MySqlConnection connection) : base(connection)
         {
             _offset = offset;
@@ -35,19 +38,12 @@ namespace salary.dal.repository.commands
             return _stringBuilder.ToString();
         }
 
-        private void OnEmployeeRecieved(salary.dto.Employee dto)
-        {
-            if (EmployeeRecieved != null)
-            {
-                EmployeeRecieved(this, new EmployeeEventArg { Employee = dto });
-            }
-        }
-
         public override void Execute()
         {
             _connection.Open();
             var cmd = new MySqlCommand(CreateQuery(), _connection);
             var dataReader = cmd.ExecuteReader();
+            _employees = new LinkedList<dto.Employee>();
 
             while (dataReader.Read())
             {
@@ -57,7 +53,7 @@ namespace salary.dal.repository.commands
                     Rate = Decimal.ToDouble(dataReader.GetDecimal(dataReader[Salary.cRate].ToString())),
                     Kind = dataReader[Salary.cKind].ToString()
                 };
-                OnEmployeeRecieved(result);
+                _employees.Append(result);
             }
             
             _connection.Close();

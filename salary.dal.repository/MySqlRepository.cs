@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using System.Linq;
 using MySql.Data.MySqlClient;
 using salary.dal.repository.commands;
 
@@ -52,9 +53,21 @@ namespace salary.dal.repository
             return cmd.IsSuccess;
         }
 
-        public IEnumerable<dto.Employee> GetMany(int skip, int limit)
+        public IEnumerable<dto.Employee> GetMany(int offset, int limit)
         {
-            throw new System.NotImplementedException();
+            var cmd = new GetManyEmployeeCommand(offset, limit, _connection);
+            
+            try
+            {
+                cmd.Execute();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+            return cmd.Employees;
         }
 
         public dto.Employee GetMostExpensiveEmployee(short kind)
