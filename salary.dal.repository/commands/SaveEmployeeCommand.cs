@@ -18,6 +18,7 @@ namespace salary.dal.repository.commands
 
         public override void Execute()
         {
+            base.Execute();
             _connection.Open();
             var cmd = new MySqlCommand(_saveEmployeeProcedureName, _connection);
             cmd.CommandType = CommandType.StoredProcedure;

@@ -49,6 +49,7 @@ namespace salary.dal.repository.commands
              FROM salary s, employee e
              WHERE e.id = s.employee_id and s.kind = 'hourly';
              */
+            base.Execute();
             _connection.Open();
             var cmd = new MySqlCommand(CreateQuery(), _connection);
             var dataReader = cmd.ExecuteReader();

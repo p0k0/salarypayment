@@ -45,6 +45,7 @@ namespace salary.dal.repository.commands
 
         public override void Execute()
         {
+            base.Execute();
             _connection.Open();
             var cmd = new MySqlCommand(CreateQuery(), _connection);
             var dataReader = cmd.ExecuteReader();
