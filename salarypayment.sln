@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "salary.dto", "salary.dto\sa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "salary.dal.repository", "salary.dal.repository\salary.dal.repository.csproj", "{E10CD7A7-3443-47CE-A0AB-8793D100FC64}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "salary.host.webapi", "salary.host.webapi\salary.host.webapi.csproj", "{D8F16ED9-4444-4E37-9606-5188FE07D6AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "salary.cli", "salary.cli\salary.cli.csproj", "{C3FF38F5-9855-41FB-A256-093E60413DA2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,5 +41,13 @@ Global
 		{E10CD7A7-3443-47CE-A0AB-8793D100FC64}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E10CD7A7-3443-47CE-A0AB-8793D100FC64}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E10CD7A7-3443-47CE-A0AB-8793D100FC64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8F16ED9-4444-4E37-9606-5188FE07D6AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8F16ED9-4444-4E37-9606-5188FE07D6AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8F16ED9-4444-4E37-9606-5188FE07D6AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8F16ED9-4444-4E37-9606-5188FE07D6AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3FF38F5-9855-41FB-A256-093E60413DA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3FF38F5-9855-41FB-A256-093E60413DA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3FF38F5-9855-41FB-A256-093E60413DA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3FF38F5-9855-41FB-A256-093E60413DA2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
