@@ -4,8 +4,8 @@ namespace salary.dal
 {
     public class Salary
     {
-        public static string Hourly = "hourly";
-        public static string Monthly = "monthly";
+        public static string KindHourly = "hourly";
+        public static string KindMonthly = "monthly";
         
         public static string cTableName = "salary";
         public static string cRate = "rate";

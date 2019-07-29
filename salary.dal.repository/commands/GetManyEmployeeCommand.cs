@@ -31,11 +31,11 @@ namespace salary.dal.repository.commands
             _stringBuilder.Append($"{Salary.cTableName}.{Salary.cRate},");
             _stringBuilder.Append($"{Salary.cTableName}.{Salary.cKind},");
             
-            _stringBuilder.Append($"if ({Salary.cTableName}.{Salary.cKind} like '{Salary.Monthly}',{Salary.cTableName}.{Salary.cRate},");
+            _stringBuilder.Append($"if ({Salary.cTableName}.{Salary.cKind} like '{Salary.KindMonthly}',{Salary.cTableName}.{Salary.cRate},");
             _stringBuilder.Append($"{Salary.cTableName}.{Salary.cRate} * 8.0 * 20.8) as p ");
             
             _stringBuilder.Append($"from {Employee.cTableName},{Salary.cTableName} ");
-            _stringBuilder.Append($"where {Employee.cTableName},{Employee.cId}={Salary.cTableName}.{Salary.cEmployeeId} ");
+            _stringBuilder.Append($"where {Employee.cTableName}.{Employee.cId}={Salary.cTableName}.{Salary.cEmployeeId} ");
             
             _stringBuilder.Append($"order by p desc, {Employee.cTableName}.{Employee.cName} ");
             _stringBuilder.Append($"limit {_limit} offset {_offset};");
