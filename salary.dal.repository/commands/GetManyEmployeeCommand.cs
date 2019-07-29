@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MySql.Data.MySqlClient;
-using salary.dal.repository.events;
 
 namespace salary.dal.repository.commands
 {
@@ -16,7 +15,7 @@ namespace salary.dal.repository.commands
 
         public LinkedList<dto.Employee> Employees => _employees;
         
-        public GetManyEmployeeCommand(long offset, long limit, MySqlConnection connection) : base(connection)
+        public GetManyEmployeeCommand(long limit, long offset, MySqlConnection connection) : base(connection)
         {
             _offset = offset;
             _limit = limit;

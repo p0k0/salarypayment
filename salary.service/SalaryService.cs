@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using salary.dal;
 using salary.domain;
@@ -51,9 +52,11 @@ namespace salary.service
             return cmd.IsSuccess;
         }
 
-        public IEnumerable<EmployeeBase> GetMany(int skip, int limit)
+        public IEnumerable<EmployeeBase> GetMany(long limit, long offset)
         {
-            throw new System.NotImplementedException();
+            var cmd = new GetManyEmployeeCommand(limit, offset, _repository);
+            cmd.Execute();
+            return cmd.Result.Select(_ => _mapper.Map<salary.dto.Employee, EmployeeBase>(_));
         }
 
         public EmployeeBase GetMostExpensiveEmployee(short kind)

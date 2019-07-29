@@ -7,7 +7,7 @@ namespace salary.service
     {
         EmployeeBase Get(string name);
         bool Save(EmployeeBase employee);
-        IEnumerable<EmployeeBase> GetMany(int skip, int limit);
+        IEnumerable<EmployeeBase> GetMany(long limit, long offset);
         EmployeeBase GetMostExpensiveEmployee(short kind);
         double GetMonthlyCost();
     }

@@ -53,7 +53,7 @@ namespace salary.dal.repository
             return cmd.IsSuccess;
         }
 
-        public IEnumerable<dto.Employee> GetMany(int offset, int limit)
+        public IEnumerable<dto.Employee> GetMany(long limit, long offset)
         {
             var cmd = new GetManyEmployeeCommand(offset, limit, _connection);
             
