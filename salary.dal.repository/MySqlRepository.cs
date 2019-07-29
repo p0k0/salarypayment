@@ -70,14 +70,36 @@ namespace salary.dal.repository
             return cmd.Employees;
         }
 
-        public dto.Employee GetMostExpensiveEmployee(short kind)
+        public dto.Employee GetEmployeeWithMaxHourlySalary()
         {
-            throw new System.NotImplementedException();
+            var cmd = new GetEmployeeWithMaxHourlySalaryCommand(_connection);
+            try
+            {
+                cmd.Execute();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+            return cmd.Result;
         }
 
         public double GetMonthlyCost()
         {
-            throw new System.NotImplementedException();
+            var cmd = new GetTotalSalarySumCommand(_connection);
+            try
+            {
+                cmd.Execute();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+            return cmd.Result;
         }
     }
 }
