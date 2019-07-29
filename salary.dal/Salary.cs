@@ -4,8 +4,12 @@ namespace salary.dal
 {
     public class Salary
     {
+        public static string Hourly = "hourly";
+        public static string Monthly = "monthly";
+        
         public static string cTableName = "salary";
         public static string cRate = "rate";
+        public static string cEmployeeId = "employee_id";
         public static string cKind = "kind";
         
         public Guid EmployeeId { get; set; }

@@ -1,9 +1,13 @@
+using System;
+
 namespace salary.domain
 {
     public abstract class EmployeeBase
     {
         public static string KindMonthly = "monthly";
         public static string KindHourly = "hourly";
+        
+        public Guid Id { get; set; }
         
         public string Name { get; set; }
         public double Rate { get; set; }

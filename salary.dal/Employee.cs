@@ -6,6 +6,7 @@ namespace salary.dal
     {
         public static string cTableName = "employee";
         public static string cName = "name";
+        public static string cId = "id";
         
         public Guid Id { get; set; }
         

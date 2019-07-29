@@ -10,7 +10,7 @@ namespace salary.domain
         }
         public override double CalculateSalary()
         {
-            return Rate * 8 * 20.8;
+            return Rate * 8.0 * 20.8;
         }
     }
 }
