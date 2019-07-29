@@ -29,6 +29,7 @@ namespace salary.service.command
         
         public override void Execute()
         {
+            base.Execute();
             _employee = _repository.GetMany(_limit, _offset).ToList();
         }
 

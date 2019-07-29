@@ -14,7 +14,7 @@ namespace salary.service.command
 
         public virtual void Execute()
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

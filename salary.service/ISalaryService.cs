@@ -8,7 +8,7 @@ namespace salary.service
         EmployeeBase Get(string name);
         bool Save(EmployeeBase employee);
         IEnumerable<EmployeeBase> GetMany(long limit, long offset);
-        EmployeeBase GetMostExpensiveEmployee(short kind);
+        EmployeeBase GetEmployeeWithMaxHourlySalary();
         double GetMonthlyCost();
     }
 }

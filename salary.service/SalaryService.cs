@@ -59,14 +59,17 @@ namespace salary.service
             return cmd.Result.Select(_ => _mapper.Map<salary.dto.Employee, EmployeeBase>(_));
         }
 
-        public EmployeeBase GetMostExpensiveEmployee(short kind)
+        public EmployeeBase GetEmployeeWithMaxHourlySalary()
         {
-            throw new System.NotImplementedException();
+            var cmd = new GetEmployeeWithMaxHourlySalaryCommand(_repository);
+            cmd.Execute();
+            return _mapper.Map<salary.dto.Employee, EmployeeBase>(cmd.Result);
         }
 
         public double GetMonthlyCost()
         {
-            throw new System.NotImplementedException();
+            var cmd = new GetTotalSalarySumCommand(_repository);
+            return cmd.Result;
         }
     }
 }

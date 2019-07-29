@@ -15,6 +15,7 @@ namespace salary.service.command
         
         public override void Execute()
         {
+            base.Execute();
             IsSuccess = _repository.Save(_employee);
         }
     }
