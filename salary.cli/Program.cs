@@ -1,12 +1,42 @@
 ﻿using System;
+using CommandLine;
 
 namespace salary.cli
 {
-    class Program
+    internal sealed class Program
     {
-        static void Main(string[] args)
+        static int Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            return Parser.Default
+                .ParseArguments<GetEmployee, GetEmployees, GetTotalSalary, SetEmployee>(args)
+                .MapResult(
+                    (SetEmployee opts) => RunSetCommandAndReturnExitCode(opts),
+                    (GetEmployee opts) => RunGetCommandAndReturnExitCode(opts),
+                    (GetEmployees opts) => RunGetCommandAndReturnExitCode(opts),
+                    (GetTotalSalary opts) => RunGetCommandAndReturnExitCode(opts),
+                    errors => 1);
+        }
+
+        private static int RunSetCommandAndReturnExitCode(SetEmployee opts)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static int RunGetCommandAndReturnExitCode(GetTotalSalary opts)
+        {
+            return 0;
+        }
+        
+        private static int RunGetCommandAndReturnExitCode(GetEmployee opts)
+        {
+            Console.WriteLine($"{opts.CustomEmployeeName}");
+            return 0;
+        }
+        
+        private static int RunGetCommandAndReturnExitCode(GetEmployees opts)
+        {
+            
+            return 0;
         }
     }
 }
