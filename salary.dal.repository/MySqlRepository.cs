@@ -18,23 +18,15 @@ namespace salary.dal.repository
             Contract.Assume(!string.IsNullOrEmpty(connectionString));
             _connectionString = connectionString;
         }
-
-        public MySqlConnection Connection => _connection ?? (_connection = new MySqlConnection(_connectionString));
-
+        
         public dto.Employee Get(string name)
         {
-            var cmd = new GetEmployeeCommand(name, _connection);
-            try
+            using (_connection = new MySqlConnection(_connectionString))
             {
+                var cmd = new GetEmployeeCommand(name, _connection);
                 cmd.Execute();
+                return cmd.Result;
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-
-            return cmd.Result;
         }
 
         public bool Save(dto.Employee employee)

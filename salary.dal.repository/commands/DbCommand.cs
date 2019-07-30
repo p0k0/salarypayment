@@ -18,6 +18,7 @@ namespace salary.dal.repository.commands
         
         public virtual void Execute()
         {
+            _connection.Open();
             while (_connection.Ping() == false)
             {
                 var t = Task.Delay(TimeSpan.FromMilliseconds(_delay)).ConfigureAwait(false);
@@ -29,6 +30,7 @@ namespace salary.dal.repository.commands
                     throw new TimeoutException();
                 }
             }
+            _connection.Close();
         }
     }
 }

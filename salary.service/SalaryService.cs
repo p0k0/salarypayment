@@ -22,6 +22,8 @@ namespace salary.service
         {
             var config = new MapperConfiguration(_ =>
             {
+                _.CreateMap<salary.dto.Employee, OfficeEmployee>();
+                _.CreateMap<salary.dto.Employee, OutsourceEmployee>();
                 _.CreateMap<salary.dto.Employee, EmployeeBase>()
                     .Include<salary.dto.Employee, OfficeEmployee>()
                     .Include<salary.dto.Employee, OutsourceEmployee>()
