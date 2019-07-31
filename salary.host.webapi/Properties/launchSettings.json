@@ -20,7 +20,7 @@
     "salary.host.webapi": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/v1/service/rate/hourly/max",
+      "launchUrl": "api/v1/service/employees",
       "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

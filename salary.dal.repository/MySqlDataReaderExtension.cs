@@ -7,7 +7,6 @@ namespace salary.dal.repository
     {
         public static dto.Employee ReadEmployee(this MySqlDataReader dataReader)
         {
-            if (dataReader.Read() == false) return null;
             if (dataReader.HasRows == false) return null;
             var mySqlUuid = dataReader[Employee.cId] as byte[];
             var result = new dto.Employee

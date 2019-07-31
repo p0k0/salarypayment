@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using MySql.Data.MySqlClient;
@@ -42,28 +43,38 @@ namespace salary.dal.repository.commands
             
             return _stringBuilder.ToString();
         }
+        private void Initialize(MySqlCommand cmd)
+        {
+            cmd.CommandText = CreateQuery();
+            cmd.CommandType = CommandType.Text;
 
+            cmd.Parameters.Add(new MySqlParameter($"@{Employee.cId}", MySqlDbType.VarBinary, 16));
+            cmd.Parameters.Add(new MySqlParameter($"@{Employee.cName}", MySqlDbType.VarChar, 20));
+            cmd.Parameters.Add(new MySqlParameter($"@{Salary.cRate}", MySqlDbType.Decimal));
+            cmd.Parameters.Add(new MySqlParameter($"@{Salary.cKind}", MySqlDbType.VarChar, 10));
+
+            cmd.Parameters[$"@{Employee.cId}"].Direction = ParameterDirection.Output;
+            cmd.Parameters[$"@{Employee.cName}"].Direction = ParameterDirection.Output;
+            cmd.Parameters[$"@{Salary.cRate}"].Direction = ParameterDirection.Output;
+            cmd.Parameters[$"@{Salary.cKind}"].Direction = ParameterDirection.Output;
+        }
+        
         public override void Execute()
         {
             base.Execute();
-            _connection.Open();
-            var cmd = new MySqlCommand(CreateQuery(), _connection);
-            var dataReader = cmd.ExecuteReader();
-            _employees = new LinkedList<dto.Employee>();
-
-            while (dataReader.Read())
+            using (var cmd = _connection.CreateCommand())
             {
-                var result = new dto.Employee
+                Initialize(cmd);
+                using (var dataReader = cmd.ExecuteReader())
                 {
-                    Id = Guid.Parse(dataReader[Employee.cId].ToString()),
-                    Name = dataReader[Employee.cName].ToString(),
-                    Rate = Decimal.ToDouble(dataReader.GetDecimal(dataReader[Salary.cRate].ToString())),
-                    Kind = dataReader[Salary.cKind].ToString()
-                };
-                _employees.Append(result);
+                    _employees = new LinkedList<dto.Employee>();
+                    while (dataReader.Read())
+                    {
+                        _employees.AddLast(dataReader.ReadEmployee());
+                    }
+                }
             }
             
-            _connection.Close();
         }
     }
 }

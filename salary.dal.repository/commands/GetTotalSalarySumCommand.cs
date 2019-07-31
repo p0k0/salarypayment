@@ -45,11 +45,9 @@ namespace salary.dal.repository.commands
              WHERE e.id = s.employee_id;
              */
             base.Execute();
-            _connection.Open();
             var cmd = new MySqlCommand(CreateQuery(), _connection);
             _salarySum = (double) cmd.ExecuteScalar();
             IsCalculated = true;
-            _connection.Close();
         }
     }
 }

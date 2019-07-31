@@ -23,8 +23,10 @@ namespace salary.dal.repository
         {
             using (_connection = new MySqlConnection(_connectionString))
             {
+                _connection.Open();
                 var cmd = new GetEmployeeCommand(name, _connection);
                 cmd.Execute();
+                _connection.Close();
                 return cmd.Result;
             }
         }
@@ -33,12 +35,11 @@ namespace salary.dal.repository
         {
             using (_connection = new MySqlConnection(_connectionString))
             {
+                _connection.Open();
                 var cmd = new SaveEmployeeCommand(employee, _connection);
                 cmd.Execute();
+                _connection.Close();
                 return cmd.IsSuccess;
-            }
-            using (_connection = new MySqlConnection(_connectionString))
-            {
             }
         }
 
@@ -46,8 +47,10 @@ namespace salary.dal.repository
         {
             using (_connection = new MySqlConnection(_connectionString))
             {
-                var cmd = new GetManyEmployeeCommand(offset, limit, _connection);
+                _connection.Open();
+                var cmd = new GetManyEmployeeCommand( limit, offset, _connection);
                 cmd.Execute();
+                _connection.Close();
                 return cmd.Employees;
             }
         }
@@ -56,8 +59,10 @@ namespace salary.dal.repository
         {
             using (_connection = new MySqlConnection(_connectionString))
             {
+                _connection.Open();
                 var cmd = new GetEmployeeWithMaxHourlyRateCommand(_connection);
                 cmd.Execute();
+                _connection.Close();
                 return cmd.Result;
             }
         }
@@ -66,8 +71,10 @@ namespace salary.dal.repository
         {
             using (_connection = new MySqlConnection(_connectionString))
             {
+                _connection.Open();
                 var cmd = new GetTotalSalarySumCommand(_connection);
                 cmd.Execute();
+                _connection.Close();
                 return cmd.Result;
             }
         }

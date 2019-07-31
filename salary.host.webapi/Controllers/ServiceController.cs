@@ -17,13 +17,21 @@ namespace salary.host.webapi.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/v1/service/employee/name
-        [HttpGet("employee/{name}")]
-        public ActionResult<EmployeeBase> GetEmployee(string name, [FromServices]ISalaryService service)
+        // GET api/v1/service/employees/name
+        [HttpGet("employees/{name}")]
+        public ActionResult<EmployeeBase> GetEmployee([FromServices]ISalaryService service, string name)
         {
             return Ok(service.Get(name));
         }
         
+        // GET api/v1/service/employees
+        [HttpGet("employees")]
+        public ActionResult<EmployeeBase> GetEmployees([FromServices]ISalaryService service, [FromQuery]long limit = 2, [FromQuery]long offset = 0)
+        {
+            return Ok(service.GetMany(limit: limit, offset: offset));
+        }
+        
+        //GET api/v1/service/rate/hourly/max
         [HttpGet("rate/hourly/max")]
         public ActionResult<EmployeeBase> GetEmployeeWithMaxHourlyRate([FromServices]ISalaryService service)
         {

@@ -17,19 +17,15 @@ namespace salary.dal.repository.commands
         public override void Execute()
         {
             base.Execute();
-            _connection.Open();
-
             using (var cmd = _connection.CreateCommand())
             {
                 Initialize(cmd);
-
                 using (var dataReader = cmd.ExecuteReader(CommandBehavior.SingleRow))
                 {
+                    dataReader.Read();
                     Result = dataReader.ReadEmployee();
-                    dataReader.Close();
-                }//dataReader
-            }//cmd
-            _connection.Close();
+                }
+            }
         }
 
         private void Initialize(MySqlCommand cmd)

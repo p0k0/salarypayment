@@ -69,14 +69,15 @@ namespace salary.dal.repository.commands
              WHERE e.id = s.employee_id and s.kind = 'hourly';
              */
             base.Execute();
-            _connection.Open();
-            var cmd = _connection.CreateCommand();
-            Initialize(cmd);
-            using (var dataReader = cmd.ExecuteReader())
+            using (var cmd = _connection.CreateCommand())
             {
-                _employee = dataReader.ReadEmployee();
+                Initialize(cmd);
+                using (var dataReader = cmd.ExecuteReader())
+                {
+                    dataReader.Read();
+                    _employee = dataReader.ReadEmployee();
+                }
             }
-            _connection.Close();
         }
     }
 }
