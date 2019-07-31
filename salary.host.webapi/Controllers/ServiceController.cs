@@ -26,7 +26,7 @@ namespace salary.host.webapi.Controllers
         
         // GET api/v1/service/employees
         [HttpGet("employees")]
-        public ActionResult<EmployeeBase> GetEmployees([FromServices]ISalaryService service, [FromQuery]long limit = 2, [FromQuery]long offset = 0)
+        public ActionResult<IEnumerable<EmployeeBase>> GetEmployees([FromServices]ISalaryService service, [FromQuery]long limit = 2, [FromQuery]long offset = 0)
         {
             return Ok(service.GetMany(limit: limit, offset: offset));
         }
@@ -36,6 +36,13 @@ namespace salary.host.webapi.Controllers
         public ActionResult<EmployeeBase> GetEmployeeWithMaxHourlyRate([FromServices]ISalaryService service)
         {
             return Ok(service.GetEmployeeWithMaxHourlyRate());
+        }
+        
+        //GET api/v1/service/salary/sum
+        [HttpGet("salary/sum")]
+        public ActionResult<double> GetTotalSalarySum([FromServices]ISalaryService service)
+        {
+            return Ok(service.GetMonthlyCost());
         }
 
         // POST api/values

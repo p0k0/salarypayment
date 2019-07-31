@@ -10,8 +10,6 @@ namespace salary.dal.repository
     public sealed class MySqlRepository : IRepository
     {
         private readonly string _connectionString;
-        private MySqlConnection _connection;
-
 
         public MySqlRepository(string connectionString)
         {
@@ -21,60 +19,60 @@ namespace salary.dal.repository
         
         public dto.Employee Get(string name)
         {
-            using (_connection = new MySqlConnection(_connectionString))
+            using (var connection = new MySqlConnection(_connectionString))
             {
-                _connection.Open();
-                var cmd = new GetEmployeeCommand(name, _connection);
+                connection.Open();
+                var cmd = new GetEmployeeCommand(name, connection);
                 cmd.Execute();
-                _connection.Close();
+                connection.Close();
                 return cmd.Result;
             }
         }
 
         public bool Save(dto.Employee employee)
         {
-            using (_connection = new MySqlConnection(_connectionString))
+            using (var connection = new MySqlConnection(_connectionString))
             {
-                _connection.Open();
-                var cmd = new SaveEmployeeCommand(employee, _connection);
+                connection.Open();
+                var cmd = new SaveEmployeeCommand(employee, connection);
                 cmd.Execute();
-                _connection.Close();
+                connection.Close();
                 return cmd.IsSuccess;
             }
         }
 
         public IEnumerable<dto.Employee> GetMany(long limit, long offset)
         {
-            using (_connection = new MySqlConnection(_connectionString))
+            using (var connection = new MySqlConnection(_connectionString))
             {
-                _connection.Open();
-                var cmd = new GetManyEmployeeCommand( limit, offset, _connection);
+                connection.Open();
+                var cmd = new GetManyEmployeeCommand( limit, offset, connection);
                 cmd.Execute();
-                _connection.Close();
+                connection.Close();
                 return cmd.Employees;
             }
         }
 
         public dto.Employee GetEmployeeWithMaxHourlyRate()
         {
-            using (_connection = new MySqlConnection(_connectionString))
+            using (var connection = new MySqlConnection(_connectionString))
             {
-                _connection.Open();
-                var cmd = new GetEmployeeWithMaxHourlyRateCommand(_connection);
+                connection.Open();
+                var cmd = new GetEmployeeWithMaxHourlyRateCommand(connection);
                 cmd.Execute();
-                _connection.Close();
+                connection.Close();
                 return cmd.Result;
             }
         }
 
         public double GetMonthlyCost()
         {
-            using (_connection = new MySqlConnection(_connectionString))
+            using (var connection = new MySqlConnection(_connectionString))
             {
-                _connection.Open();
-                var cmd = new GetTotalSalarySumCommand(_connection);
+                connection.Open();
+                var cmd = new GetTotalSalarySumCommand(connection);
                 cmd.Execute();
-                _connection.Close();
+                connection.Close();
                 return cmd.Result;
             }
         }

@@ -1,4 +1,5 @@
 using System;
+using System.Data;
 using System.Text;
 using MySql.Data.MySqlClient;
 
@@ -37,6 +38,14 @@ namespace salary.dal.repository.commands
             return _stringBuilder.ToString();
         }
 
+        private void Initialize(MySqlCommand cmd)
+        {
+            cmd.CommandText = CreateQuery();
+            cmd.CommandType = CommandType.Text;
+            cmd.Parameters.Add(new MySqlParameter("@summary", MySqlDbType.Decimal));
+            cmd.Parameters["@summary"].Direction = ParameterDirection.Output;
+        }
+
         public override void Execute()
         {
             /*
@@ -45,9 +54,13 @@ namespace salary.dal.repository.commands
              WHERE e.id = s.employee_id;
              */
             base.Execute();
-            var cmd = new MySqlCommand(CreateQuery(), _connection);
-            _salarySum = (double) cmd.ExecuteScalar();
-            IsCalculated = true;
+
+            using (var cmd = _connection.CreateCommand())
+            {
+                Initialize(cmd);
+                _salarySum = Decimal.ToDouble((decimal)cmd.ExecuteScalar());
+                IsCalculated = true;
+            }
         }
     }
 }
