@@ -1,10 +1,11 @@
 using System;
+using System.Data;
 using System.Text;
 using MySql.Data.MySqlClient;
 
 namespace salary.dal.repository.commands
 {
-    public class GetEmployeeWithMaxHourlySalaryCommand : DbCommand
+    public class GetEmployeeWithMaxHourlyRateCommand : DbCommand
     {
         private dto.Employee _employee;
         private StringBuilder _stringBuilder;
@@ -21,7 +22,7 @@ namespace salary.dal.repository.commands
                 return _employee;
             }
         }
-        public GetEmployeeWithMaxHourlySalaryCommand(MySqlConnection connection) : base(connection)
+        public GetEmployeeWithMaxHourlyRateCommand(MySqlConnection connection) : base(connection)
         {
             _stringBuilder = new StringBuilder();
         }
@@ -33,13 +34,31 @@ namespace salary.dal.repository.commands
             _stringBuilder.Append($"{Employee.cTableName}.{Employee.cId},");
             _stringBuilder.Append($"{Employee.cTableName}.{Employee.cName},");
             _stringBuilder.Append($"{Salary.cTableName}.{Salary.cKind},");
-            _stringBuilder.Append($"max({Salary.cTableName}.{Salary.cRate}) ");
+            _stringBuilder.Append($"max({Salary.cTableName}.{Salary.cRate}) as {Salary.cRate} ");
             
             _stringBuilder.Append($"from {Employee.cTableName},{Salary.cTableName} ");
             _stringBuilder.Append($"where {Employee.cTableName}.{Employee.cId}={Salary.cTableName}.{Salary.cEmployeeId} ");
-            _stringBuilder.Append($"and {Salary.cTableName}.{Salary.cKind} = {Salary.KindHourly};");
+            _stringBuilder.Append($"and {Salary.cTableName}.{Salary.cKind} = '{Salary.KindHourly}';");
             
             return _stringBuilder.ToString();
+        }
+        
+        
+
+        private void Initialize(MySqlCommand cmd)
+        {
+            cmd.CommandText = CreateQuery();
+            cmd.CommandType = CommandType.Text;
+
+            cmd.Parameters.Add(new MySqlParameter($"@{Employee.cId}", MySqlDbType.VarBinary, 16));
+            cmd.Parameters.Add(new MySqlParameter($"@{Employee.cName}", MySqlDbType.VarChar, 20));
+            cmd.Parameters.Add(new MySqlParameter($"@{Salary.cRate}", MySqlDbType.Decimal));
+            cmd.Parameters.Add(new MySqlParameter($"@{Salary.cKind}", MySqlDbType.VarChar, 10));
+
+            cmd.Parameters[$"@{Employee.cId}"].Direction = ParameterDirection.Output;
+            cmd.Parameters[$"@{Employee.cName}"].Direction = ParameterDirection.Output;
+            cmd.Parameters[$"@{Salary.cRate}"].Direction = ParameterDirection.Output;
+            cmd.Parameters[$"@{Salary.cKind}"].Direction = ParameterDirection.Output;
         }
 
         public override void Execute()
@@ -51,19 +70,12 @@ namespace salary.dal.repository.commands
              */
             base.Execute();
             _connection.Open();
-            var cmd = new MySqlCommand(CreateQuery(), _connection);
-            var dataReader = cmd.ExecuteReader();
-            while (dataReader.Read())
+            var cmd = _connection.CreateCommand();
+            Initialize(cmd);
+            using (var dataReader = cmd.ExecuteReader())
             {
-                _employee = new dto.Employee
-                {
-                    Id = Guid.Parse(dataReader[Employee.cId].ToString()),
-                    Name = dataReader[Employee.cName].ToString(),
-                    Kind = dataReader[Salary.cKind].ToString(),
-                    Rate = Decimal.ToDouble(dataReader.GetDecimal(dataReader[Salary.cRate].ToString()))
-                };
+                _employee = dataReader.ReadEmployee();
             }
-            
             _connection.Close();
         }
     }

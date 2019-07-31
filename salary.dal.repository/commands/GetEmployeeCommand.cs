@@ -7,7 +7,6 @@ namespace salary.dal.repository.commands
     public class GetEmployeeCommand : DbCommand
     {
         private readonly string _name;
-        private static string _getEmployeeProcedureName = "call get_employee(`@inname`);";
         public salary.dto.Employee Result;
         
         public GetEmployeeCommand(string name, MySqlConnection connection) : base(connection)
@@ -17,49 +16,36 @@ namespace salary.dal.repository.commands
 
         public override void Execute()
         {
-            //base.Execute();
-            
+            base.Execute();
             _connection.Open();
-            
-            var cmd = _connection.CreateCommand();
+
+            using (var cmd = _connection.CreateCommand())
+            {
+                Initialize(cmd);
+
+                using (var dataReader = cmd.ExecuteReader(CommandBehavior.SingleRow))
+                {
+                    Result = dataReader.ReadEmployee();
+                    dataReader.Close();
+                }//dataReader
+            }//cmd
+            _connection.Close();
+        }
+
+        private void Initialize(MySqlCommand cmd)
+        {
             cmd.CommandText = $"call get_employee('{_name}');";
             cmd.CommandType = CommandType.Text;
-            
-            cmd.Parameters.Add(new MySqlParameter("@id", MySqlDbType.VarBinary, 16));
-            cmd.Parameters.Add(new MySqlParameter("@name", MySqlDbType.VarChar, 20));
-            cmd.Parameters.Add(new MySqlParameter("@rate", MySqlDbType.Decimal));
-            cmd.Parameters.Add(new MySqlParameter("@kind", MySqlDbType.VarChar, 10));
-            
-            cmd.Parameters["@id"].Direction = ParameterDirection.Output;
-            cmd.Parameters["@name"].Direction = ParameterDirection.Output;
-            cmd.Parameters["@rate"].Direction = ParameterDirection.Output;
-            cmd.Parameters["@kind"].Direction = ParameterDirection.Output;
-            
-            MySqlDataReader dataReader;
-            try
-            {
-                dataReader = cmd.ExecuteReader(CommandBehavior.SingleRow);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-                
-            dataReader.Read();
 
-            var result = new dto.Employee();
-            result.Id = new Guid(dataReader[Employee.cId] as byte[]);
-            result.Name = dataReader[Employee.cName].ToString();
-            result.Rate = Decimal.ToDouble(Decimal.Parse(dataReader[Salary.cRate].ToString()));
-            result.Kind = dataReader[Salary.cKind].ToString();
-            
-            
-            dataReader.Close();
+            cmd.Parameters.Add(new MySqlParameter($"@{Employee.cId}", MySqlDbType.VarBinary, 16));
+            cmd.Parameters.Add(new MySqlParameter($"@{Employee.cName}", MySqlDbType.VarChar, 20));
+            cmd.Parameters.Add(new MySqlParameter($"@{Salary.cRate}", MySqlDbType.Decimal));
+            cmd.Parameters.Add(new MySqlParameter($"@{Salary.cKind}", MySqlDbType.VarChar, 10));
 
-            Result = result; 
-
-            _connection.Close();
+            cmd.Parameters[$"@{Employee.cId}"].Direction = ParameterDirection.Output;
+            cmd.Parameters[$"@{Employee.cName}"].Direction = ParameterDirection.Output;
+            cmd.Parameters[$"@{Salary.cRate}"].Direction = ParameterDirection.Output;
+            cmd.Parameters[$"@{Salary.cKind}"].Direction = ParameterDirection.Output;
         }
     }
 }

@@ -2,9 +2,9 @@ using salary.dal;
 
 namespace salary.service.command
 {
-    public class GetEmployeeWithMaxHourlySalaryCommand : Command
+    public class GetEmployeeWithMaxHourlyRateCommand : Command
     {
-        public GetEmployeeWithMaxHourlySalaryCommand(IRepository repository) : base(repository)
+        public GetEmployeeWithMaxHourlyRateCommand(IRepository repository) : base(repository)
         {
         }
 
@@ -24,7 +24,7 @@ namespace salary.service.command
         public override void Execute()
         {
             base.Execute();
-            _employee = _repository.GetEmployeeWithMaxHourlySalary();
+            _employee = _repository.GetEmployeeWithMaxHourlyRate();
         }
 
         private salary.dto.Employee _employee;

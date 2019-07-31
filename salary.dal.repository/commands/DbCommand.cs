@@ -18,19 +18,6 @@ namespace salary.dal.repository.commands
         
         public virtual void Execute()
         {
-            _connection.Open();
-            while (_connection.Ping() == false)
-            {
-                var t = Task.Delay(TimeSpan.FromMilliseconds(_delay)).ConfigureAwait(false);
-                t.GetAwaiter().GetResult();
-                _retry++;
-                _delay += _delay;
-                if (_maxRetry == _retry)
-                {
-                    throw new TimeoutException();
-                }
-            }
-            _connection.Close();
         }
     }
 }

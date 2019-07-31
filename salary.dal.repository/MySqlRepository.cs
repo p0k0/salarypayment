@@ -31,67 +31,45 @@ namespace salary.dal.repository
 
         public bool Save(dto.Employee employee)
         {
-            var cmd = new SaveEmployeeCommand(employee, _connection);
-            try
+            using (_connection = new MySqlConnection(_connectionString))
             {
+                var cmd = new SaveEmployeeCommand(employee, _connection);
                 cmd.Execute();
+                return cmd.IsSuccess;
             }
-            catch (Exception e)
+            using (_connection = new MySqlConnection(_connectionString))
             {
-                Console.WriteLine(e);
-                throw;
             }
-
-            return cmd.IsSuccess;
         }
 
         public IEnumerable<dto.Employee> GetMany(long limit, long offset)
         {
-            var cmd = new GetManyEmployeeCommand(offset, limit, _connection);
-            
-            try
+            using (_connection = new MySqlConnection(_connectionString))
             {
+                var cmd = new GetManyEmployeeCommand(offset, limit, _connection);
                 cmd.Execute();
+                return cmd.Employees;
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-
-            return cmd.Employees;
         }
 
-        public dto.Employee GetEmployeeWithMaxHourlySalary()
+        public dto.Employee GetEmployeeWithMaxHourlyRate()
         {
-            var cmd = new GetEmployeeWithMaxHourlySalaryCommand(_connection);
-            try
+            using (_connection = new MySqlConnection(_connectionString))
             {
+                var cmd = new GetEmployeeWithMaxHourlyRateCommand(_connection);
                 cmd.Execute();
+                return cmd.Result;
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-
-            return cmd.Result;
         }
 
         public double GetMonthlyCost()
         {
-            var cmd = new GetTotalSalarySumCommand(_connection);
-            try
+            using (_connection = new MySqlConnection(_connectionString))
             {
+                var cmd = new GetTotalSalarySumCommand(_connection);
                 cmd.Execute();
+                return cmd.Result;
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-
-            return cmd.Result;
         }
     }
 }

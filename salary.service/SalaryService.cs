@@ -61,9 +61,9 @@ namespace salary.service
             return cmd.Result.Select(_ => _mapper.Map<salary.dto.Employee, EmployeeBase>(_));
         }
 
-        public EmployeeBase GetEmployeeWithMaxHourlySalary()
+        public EmployeeBase GetEmployeeWithMaxHourlyRate()
         {
-            var cmd = new GetEmployeeWithMaxHourlySalaryCommand(_repository);
+            var cmd = new GetEmployeeWithMaxHourlyRateCommand(_repository);
             cmd.Execute();
             return _mapper.Map<salary.dto.Employee, EmployeeBase>(cmd.Result);
         }

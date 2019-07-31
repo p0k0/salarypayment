@@ -23,6 +23,12 @@ namespace salary.host.webapi.Controllers
         {
             return Ok(service.Get(name));
         }
+        
+        [HttpGet("rate/hourly/max")]
+        public ActionResult<EmployeeBase> GetEmployeeWithMaxHourlyRate([FromServices]ISalaryService service)
+        {
+            return Ok(service.GetEmployeeWithMaxHourlyRate());
+        }
 
         // POST api/values
         [HttpPost]

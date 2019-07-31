@@ -7,7 +7,7 @@ namespace salary.dal
         salary.dto.Employee Get(string name);
         bool Save(salary.dto.Employee employee);
         IEnumerable<salary.dto.Employee> GetMany(long limit, long offset);
-        salary.dto.Employee GetEmployeeWithMaxHourlySalary();
+        salary.dto.Employee GetEmployeeWithMaxHourlyRate();
         double GetMonthlyCost();
     }
 }
