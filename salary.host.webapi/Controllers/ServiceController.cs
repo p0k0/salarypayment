@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using salary.domain;
 using salary.service;
@@ -10,13 +9,6 @@ namespace salary.host.webapi.Controllers
     [ApiController]
     public class ServiceController : ControllerBase
     {
-        // GET api/v1/service
-        [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
         // GET api/v1/service/employees/name
         [HttpGet("employees/{name}")]
         public ActionResult<EmployeeBase> GetEmployee([FromServices]ISalaryService service, string name)
@@ -45,10 +37,19 @@ namespace salary.host.webapi.Controllers
             return Ok(service.GetMonthlyCost());
         }
 
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody] string value)
+        // POST api/v1/service/employees
+        [HttpPost("employees")]
+        public ActionResult<bool> Post([FromServices]ISalaryService service, webapi.dto.Employee employee)
         {
+            if (double.TryParse(employee.Rate, out double rateNum) == false)
+                return BadRequest();
+            
+            return Ok(service.Save(new salary.dto.Employee()
+            {
+                Name = employee.Name,
+                Kind = employee.Kind,
+                Rate = rateNum
+            }));
         }
     }
 }

@@ -47,9 +47,9 @@ namespace salary.service
             return _mapper.Map<salary.dto.Employee, EmployeeBase>(cmd.Result);
         }
 
-        public bool Save(EmployeeBase employee)
+        public bool Save(salary.dto.Employee employee)
         {
-            var cmd = new SaveEmployeeCommand(_mapper.Map<EmployeeBase, salary.dto.Employee>(employee), _repository);
+            var cmd = new SaveEmployeeCommand(employee, _repository);
             cmd.Execute();
             return cmd.IsSuccess;
         }

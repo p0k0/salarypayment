@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\salary.service\salary.service.csproj" />
     <ProjectReference Include="..\salary.dal.repository\salary.dal.repository.csproj" />
+    <ProjectReference Include="..\salary.host.webapi.dto\salary.host.webapi.dto.csproj" />
   </ItemGroup>
 
 </Project>
