@@ -2,10 +2,10 @@ using System.Collections.Generic;
 using CommandLine;
 using CommandLine.Text;
 
-namespace salary.cli
+namespace salary.cli.arguments
 {
     [Verb("get-salary", HelpText = "Get salary info")]
-    public class GetTotalSalary
+    public class GetTotalSalary: SetHostAddress
     {
         [Option('t', "totalmonthpayment", Required = true, HelpText = "Total month salary payment.")]
         public bool TotalMonthPayment { get; set; }

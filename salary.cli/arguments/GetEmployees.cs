@@ -2,10 +2,10 @@ using System.Collections.Generic;
 using CommandLine;
 using CommandLine.Text;
 
-namespace salary.cli
+namespace salary.cli.arguments
 {
     [Verb("get-employees", HelpText = "Get employees info")]
-    public class GetEmployees
+    public class GetEmployees: SetHostAddress
     {
         [Option('o', "offset", Required = false, Default = 0,HelpText = "Result offset.")]
         public long Offset { get; set; }

@@ -7,6 +7,11 @@
 
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.5.0" />
+    <PackageReference Include="RestSharp" Version="106.6.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\salary.dto\salary.dto.csproj" />
   </ItemGroup>
 
 </Project>

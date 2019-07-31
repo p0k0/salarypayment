@@ -2,10 +2,10 @@ using System.Collections.Generic;
 using CommandLine;
 using CommandLine.Text;
 
-namespace salary.cli
+namespace salary.cli.arguments
 {
     [Verb("set-employee", HelpText = "Set new employee with salary")]
-    public class SetEmployee
+    public class SetEmployee : SetHostAddress
     {
         [Option('n', "name", Required = true, HelpText = "Employee name.")]
         public string CustomEmployeeName { get; set; }
