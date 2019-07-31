@@ -17,17 +17,20 @@ namespace salary.dal.repository.commands
 
         private void Initialize(MySqlCommand cmd)
         {
-            //CALL save_employee('s', 1200.25, 'monthly');
-            cmd.CommandText = $"call save_employee('{_employee.Name}', {_employee.Rate}, '{_employee.Kind}');";
+            cmd.CommandText = $"call save_employee(@{Employee.cName}, @{Salary.cRate}, @{Salary.cKind});";
             cmd.CommandType = CommandType.Text;
             
-//            cmd.Parameters.Add(new MySqlParameter($"@{Employee.cName}", MySqlDbType.VarChar, 20));
-//            cmd.Parameters.Add(new MySqlParameter($"@{Salary.cRate}", MySqlDbType.Decimal));
-//            cmd.Parameters.Add(new MySqlParameter($"@{Salary.cKind}", MySqlDbType.VarChar, 10));
-//            
-//            cmd.Parameters[$"@{Employee.cName}"].Direction = ParameterDirection.Input;
-//            cmd.Parameters[$"@{Salary.cRate}"].Direction = ParameterDirection.Input;
-//            cmd.Parameters[$"@{Salary.cKind}"].Direction = ParameterDirection.Input;
+            cmd.Parameters.Add(new MySqlParameter($"@{Employee.cName}", MySqlDbType.VarChar, 20));
+            cmd.Parameters.Add(new MySqlParameter($"@{Salary.cRate}", MySqlDbType.Decimal));
+            cmd.Parameters.Add(new MySqlParameter($"@{Salary.cKind}", MySqlDbType.VarChar, 10));
+            
+            cmd.Parameters[$"@{Employee.cName}"].Direction = ParameterDirection.Input;
+            cmd.Parameters[$"@{Salary.cRate}"].Direction = ParameterDirection.Input;
+            cmd.Parameters[$"@{Salary.cKind}"].Direction = ParameterDirection.Input;
+
+            cmd.Parameters[$"@{Employee.cName}"].Value = _employee.Name;
+            cmd.Parameters[$"@{Salary.cRate}"].Value = _employee.Rate;
+            cmd.Parameters[$"@{Salary.cKind}"].Value = _employee.Kind;
         }
         
         public override void Execute()
