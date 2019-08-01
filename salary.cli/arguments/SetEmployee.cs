@@ -26,14 +26,16 @@ namespace salary.cli.arguments
                     {
                         CustomEmployeeName = "Sam",
                         PaymentKind = "hourly",
-                        Rate = 1250
+                        Rate = 1250,
+                        BaseUrl = "https://localhost:5001/"
                     });
                 yield return new Example("Set new employee with monthly payment kind",
                     new SetEmployee
                     {
                         CustomEmployeeName = "Will",
                         PaymentKind = "monthly",
-                        Rate = 125000
+                        Rate = 125000,
+                        BaseUrl = "https://localhost:5001/"
                     });
             }
         }

@@ -22,7 +22,8 @@ namespace salary.cli.arguments
                     new GetEmployees
                     {
                         Limit = 10,
-                        Offset = 40
+                        Offset = 40,
+                        BaseUrl = "https://localhost:5001/"
                     });
             }
         }

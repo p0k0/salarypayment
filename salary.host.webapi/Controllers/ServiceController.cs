@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using salary.domain;
 using salary.service;
@@ -9,25 +10,40 @@ namespace salary.host.webapi.Controllers
     [ApiController]
     public class ServiceController : ControllerBase
     {
+        private IMapper _mapper;
+
+        public ServiceController()
+        {
+            //webapi.dto
+            var config = new MapperConfiguration(_ =>
+            {
+                _.CreateMap<EmployeeBase, webapi.dto.Employee>();
+            });
+            _mapper = new Mapper(config);
+        }
+        
         // GET api/v1/service/employees/name
         [HttpGet("employees/{name}")]
-        public ActionResult<EmployeeBase> GetEmployee([FromServices]ISalaryService service, string name)
+        public ActionResult<webapi.dto.Employee> GetEmployee([FromServices]ISalaryService service, string name)
         {
-            return Ok(service.Get(name));
+            var employee = _mapper.Map<EmployeeBase, webapi.dto.Employee>(service.Get(name));
+            return Ok(employee);
         }
         
         // GET api/v1/service/employees
         [HttpGet("employees")]
-        public ActionResult<IEnumerable<EmployeeBase>> GetEmployees([FromServices]ISalaryService service, [FromQuery]long limit = 2, [FromQuery]long offset = 0)
+        public ActionResult<IEnumerable<webapi.dto.Employee>> GetEmployees([FromServices]ISalaryService service, [FromQuery]long limit = 2, [FromQuery]long offset = 0)
         {
-            return Ok(service.GetMany(limit: limit, offset: offset));
+            var employees = _mapper.Map<IEnumerable<EmployeeBase>, IReadOnlyList<webapi.dto.Employee>>(service.GetMany(limit, offset));
+            return Ok(employees);
         }
         
         //GET api/v1/service/rate/hourly/max
         [HttpGet("rate/hourly/max")]
-        public ActionResult<EmployeeBase> GetEmployeeWithMaxHourlyRate([FromServices]ISalaryService service)
+        public ActionResult<webapi.dto.Employee> GetEmployeeWithMaxHourlyRate([FromServices]ISalaryService service)
         {
-            return Ok(service.GetEmployeeWithMaxHourlyRate());
+            var employee = _mapper.Map<EmployeeBase, webapi.dto.Employee>(service.GetEmployeeWithMaxHourlyRate());
+            return Ok(employee);
         }
         
         //GET api/v1/service/salary/sum

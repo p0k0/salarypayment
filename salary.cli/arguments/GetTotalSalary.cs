@@ -19,7 +19,8 @@ namespace salary.cli.arguments
                 yield return new Example("Get total month salary payment",
                     new GetTotalSalary
                     {
-                        TotalMonthPayment = true
+                        TotalMonthPayment = true,
+                        BaseUrl = "https://localhost:5001/"
                     });
             }
         }

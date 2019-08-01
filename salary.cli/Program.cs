@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using CommandLine;
 using RestSharp;
@@ -12,13 +13,28 @@ namespace salary.cli
         static int Main(string[] args)
         {
             return Parser.Default
-                .ParseArguments<SetHostAddress, GetEmployee, GetEmployees, GetTotalSalary, SetEmployee>(args)
+                .ParseArguments<SetHostAddress, GetEmployee, GetEmployeeWithMaxHourlyRate, GetEmployees, GetTotalSalary, SetEmployee>(args)
                 .MapResult(
                     (SetEmployee opts) => RunSetCommandAndReturnExitCode(opts),
-                    (GetEmployee opts) => RunGetCommandAndReturnExitCode(opts),
+                    (GetEmployee opts) => GetEmployeeVerb(opts),
+                    (GetEmployeeWithMaxHourlyRate opts) => GetEmployeeWithMaxHourlyRateVerb(opts),
                     (GetEmployees opts) => RunGetCommandAndReturnExitCode(opts),
                     (GetTotalSalary opts) => RunGetCommandAndReturnExitCode(opts),
                     errors => 1);
+        }
+
+        private static int GetEmployeeWithMaxHourlyRateVerb(GetEmployeeWithMaxHourlyRate opts)
+        {
+            var client = new RestClient(opts.BaseUrl)
+            {
+                RemoteCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true,
+            };
+            
+            var request = new RestRequest("api/v1/service/rate/hourly/max", Method.GET);
+            
+            var response = client.Execute<Employee>(request);
+            Console.Write(response.Data);
+            return 0;
         }
 
         private static int RunSetCommandAndReturnExitCode(SetEmployee opts)
@@ -28,44 +44,43 @@ namespace salary.cli
 
         private static int RunGetCommandAndReturnExitCode(GetTotalSalary opts)
         {
+            var client = new RestClient(opts.BaseUrl)
+            {
+                RemoteCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true,
+            };
             
+            var request = new RestRequest("api/v1/service/salary/sum", Method.GET);
+            var response = client.Execute<double>(request);
+            Console.Write(response.Data);
             return 0;
         }
         
-        private static int RunGetCommandAndReturnExitCode(GetEmployee opts)
+        private static int GetEmployeeVerb(GetEmployee opts)
         {
             var client = new RestClient(opts.BaseUrl)
             {
                 RemoteCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true,
             };
             
-            
             var request = new RestRequest("api/v1/service/employees/{name}", Method.GET);
             request.AddUrlSegment("name", opts.CustomEmployeeName);
-
             var response = client.Execute<Employee>(request);
-            var sb = new StringBuilder();
-            
-            
-            sb.Append(nameof(response.Data.Id)).Append("|");
-            sb.Append(nameof(response.Data.Name)).Append("|");
-            sb.Append(nameof(response.Data.Kind)).Append("|");
-            sb.Append(nameof(response.Data.Rate));
-            sb.Append(Environment.NewLine);
-            
-            sb.Append(response.Data.Id).Append("|");
-            sb.Append(response.Data.Name).Append("|");
-            sb.Append(response.Data.Kind).Append("|");
-            sb.Append(response.Data.Rate);
-            sb.Append(Environment.NewLine);
-            
-            Console.WriteLine(sb.ToString());
+            Console.Write(response.Data);
             return 0;
         }
         
         private static int RunGetCommandAndReturnExitCode(GetEmployees opts)
         {
+            var client = new RestClient(opts.BaseUrl)
+            {
+                RemoteCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true,
+            };
             
+            var request = new RestRequest("api/v1/service/employees", Method.GET);
+            request.AddQueryParameter("limit", opts.Limit.ToString());
+            request.AddQueryParameter("offset", opts.Offset.ToString());
+            var response = client.Execute<List<Employee>>(request);
+            response.Data.ForEach(Console.WriteLine);
             return 0;
         }
     }
