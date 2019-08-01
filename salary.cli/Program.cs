@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using CommandLine;
 using RestSharp;
 using salary.cli.arguments;
@@ -39,7 +38,21 @@ namespace salary.cli
 
         private static int RunSetCommandAndReturnExitCode(SetEmployee opts)
         {
-            throw new NotImplementedException();
+            var client = new RestClient(opts.BaseUrl)
+            {
+                RemoteCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true,
+            };
+            
+            var request = new RestRequest("api/v1/service/employees", Method.POST);
+            request.AddJsonBody(new salary.host.webapi.dto.Employee()
+            {
+                Name = opts.CustomEmployeeName, 
+                Kind = opts.PaymentKind,
+                Rate = opts.Rate.ToString()
+            });
+            var response = client.Execute<bool>(request);
+            Console.Write($"isSuccess:{response.Data}");
+            return 0;
         }
 
         private static int RunGetCommandAndReturnExitCode(GetTotalSalary opts)

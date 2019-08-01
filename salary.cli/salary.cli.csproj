@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\salary.dto\salary.dto.csproj" />
+    <ProjectReference Include="..\salary.host.webapi.dto\salary.host.webapi.dto.csproj" />
   </ItemGroup>
 
 </Project>
