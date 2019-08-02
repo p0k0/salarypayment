@@ -9,6 +9,7 @@ namespace salary.cli
 {
     internal sealed class Program
     {
+        private const string _path = "api/v1/service/";
         static int Main(string[] args)
         {
             return Parser.Default
@@ -29,7 +30,7 @@ namespace salary.cli
                 RemoteCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true,
             };
             
-            var request = new RestRequest("api/v1/service/rate/hourly/max", Method.GET);
+            var request = new RestRequest(_path + "rate/hourly/max", Method.GET);
             
             var response = client.Execute<Employee>(request);
             Console.Write(response.Data);
@@ -43,7 +44,7 @@ namespace salary.cli
                 RemoteCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true,
             };
             
-            var request = new RestRequest("api/v1/service/employees", Method.POST);
+            var request = new RestRequest(_path + "employees", Method.POST);
             request.AddJsonBody(new salary.host.webapi.dto.Employee()
             {
                 Name = opts.CustomEmployeeName, 
@@ -62,7 +63,7 @@ namespace salary.cli
                 RemoteCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true,
             };
             
-            var request = new RestRequest("api/v1/service/salary/sum", Method.GET);
+            var request = new RestRequest(_path + "salary/sum", Method.GET);
             var response = client.Execute<double>(request);
             Console.Write(response.Data);
             return 0;
@@ -75,7 +76,7 @@ namespace salary.cli
                 RemoteCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true,
             };
             
-            var request = new RestRequest("api/v1/service/employees/{name}", Method.GET);
+            var request = new RestRequest(_path + "employees/{name}", Method.GET);
             request.AddUrlSegment("name", opts.CustomEmployeeName);
             var response = client.Execute<Employee>(request);
             Console.Write(response.Data);
@@ -89,7 +90,7 @@ namespace salary.cli
                 RemoteCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true,
             };
             
-            var request = new RestRequest("api/v1/service/employees", Method.GET);
+            var request = new RestRequest(_path + "employees", Method.GET);
             request.AddQueryParameter("limit", opts.Limit.ToString());
             request.AddQueryParameter("offset", opts.Offset.ToString());
             var response = client.Execute<List<Employee>>(request);
