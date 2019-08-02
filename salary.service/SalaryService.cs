@@ -1,43 +1,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
+using MediatR;
 using salary.dal;
 using salary.domain;
+using salary.host;
 using salary.service.command;
 
 namespace salary.service
 {
     public sealed class SalaryService : ISalaryService
     {
+        private readonly IMediator _mediator;
         private readonly IRepository _repository;
         private IMapper _mapper;
 
-        public SalaryService(IRepository repository)
+        public SalaryService(IMediator mediator, IMapConfigureFactory mapConfigureFactory)
         {
-            _repository = repository;
-            ConfigureMapper();
-        }
-
-        private void ConfigureMapper()
-        {
-            var config = new MapperConfiguration(_ =>
-            {
-                _.CreateMap<salary.dto.Employee, OfficeEmployee>();
-                _.CreateMap<salary.dto.Employee, OutsourceEmployee>();
-                _.CreateMap<salary.dto.Employee, EmployeeBase>()
-                    .Include<salary.dto.Employee, OfficeEmployee>()
-                    .Include<salary.dto.Employee, OutsourceEmployee>()
-                    .ConstructUsing((employee, context) =>
-                    {
-                        if (string.Equals(employee.Kind, EmployeeBase.KindHourly))
-                        {
-                            return new OutsourceEmployee();
-                        }
-                        return new OfficeEmployee();
-                    });
-                _.CreateMap<EmployeeBase,salary.dto.Employee>();
-            });
-            _mapper = new Mapper(config);
+            _mediator = mediator;
+            _mapper = mapConfigureFactory.CreateServiceMap();
+            
         }
         
         public EmployeeBase Get(string name)

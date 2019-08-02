@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\salary.domain\salary.domain.csproj" />
     <ProjectReference Include="..\salary.dto\salary.dto.csproj" />
+    <ProjectReference Include="..\salary.host\salary.host.csproj" />
     <ProjectReference Include="..\salary.service\salary.service.csproj" />
     <ProjectReference Include="..\salary.dal.repository\salary.dal.repository.csproj" />
     <ProjectReference Include="..\salary.host.webapi.dto\salary.host.webapi.dto.csproj" />

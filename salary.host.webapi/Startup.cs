@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -37,8 +38,7 @@ namespace salary.host.webapi
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddTransient<IRepository, MySqlRepository>(c => new MySqlRepository(Configuration["DataBaseConnection:MySql"]));
             services.AddSingleton<ISalaryService, SalaryService>();
-            
-            
+            services.AddSingleton<IMapConfigureFactory, MapConfigureFactory>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
