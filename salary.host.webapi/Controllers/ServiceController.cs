@@ -23,6 +23,7 @@ namespace salary.host.webapi.Controllers
             _mapper = new Mapper(config);
         }
         
+        //additional read https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9
         [ResponseCache(Duration = 10)]
         // GET api/v1/service/employees/name
         [HttpGet("employees/{name}")]
