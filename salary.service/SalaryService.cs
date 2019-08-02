@@ -1,59 +1,61 @@
 using System.Collections.Generic;
-using System.Linq;
 using AutoMapper;
 using MediatR;
-using salary.dal;
 using salary.domain;
 using salary.host;
-using salary.service.command;
+using salary.host.command;
 
 namespace salary.service
 {
     public sealed class SalaryService : ISalaryService
     {
         private readonly IMediator _mediator;
-        private readonly IRepository _repository;
         private IMapper _mapper;
 
         public SalaryService(IMediator mediator, IMapConfigureFactory mapConfigureFactory)
         {
             _mediator = mediator;
             _mapper = mapConfigureFactory.CreateServiceMap();
-            
         }
         
         public EmployeeBase Get(string name)
         {
-            var cmd = new GetEmployeeCommand(name, _repository);
-            cmd.Execute();
-            return _mapper.Map<salary.dto.Employee, EmployeeBase>(cmd.Result);
+            var task = _mediator.Send(new GetEmployeeCommand() { Name = name })
+                .ConfigureAwait(false);
+            var result = task.GetAwaiter().GetResult();
+            return _mapper.Map<salary.dto.Employee, EmployeeBase>(result);
+        }
+        
+        public EmployeeBase GetEmployeeWithMaxHourlyRate()
+        {
+            var task = _mediator.Send(new GetEmployeeWithMaxHourlyRateCommand())
+                .ConfigureAwait(false);
+            var result = task.GetAwaiter().GetResult();
+            return _mapper.Map<salary.dto.Employee, EmployeeBase>(result);
+        }
+
+        public IReadOnlyList<EmployeeBase> GetMany(long limit, long offset)
+        {
+            var task = _mediator.Send(new GetManyEmployeeCommand() { Limit = limit, Offset = offset })
+                .ConfigureAwait(false);
+            var result = task.GetAwaiter().GetResult();
+            return _mapper.Map<IReadOnlyList<salary.dto.Employee>, IReadOnlyList<EmployeeBase>>(result);
+        }
+        
+        public double GetMonthlyCost()
+        {
+            var task = _mediator.Send(new GetTotalSalarySumCommand()).ConfigureAwait(false);
+            var result = task.GetAwaiter().GetResult();
+            return result;
         }
 
         public bool Save(salary.dto.Employee employee)
         {
-            var cmd = new SaveEmployeeCommand(employee, _repository);
-            cmd.Execute();
-            return cmd.IsSuccess;
+            var task = _mediator.Send(new SaveEmployeeCommand() {Employee = employee})
+                .ConfigureAwait(false);
+            var result = task.GetAwaiter().GetResult();
+            return result;
         }
 
-        public IEnumerable<EmployeeBase> GetMany(long limit, long offset)
-        {
-            var cmd = new GetManyEmployeeCommand(limit, offset, _repository);
-            cmd.Execute();
-            return cmd.Result.Select(_ => _mapper.Map<salary.dto.Employee, EmployeeBase>(_));
-        }
-
-        public EmployeeBase GetEmployeeWithMaxHourlyRate()
-        {
-            var cmd = new GetEmployeeWithMaxHourlyRateCommand(_repository);
-            cmd.Execute();
-            return _mapper.Map<salary.dto.Employee, EmployeeBase>(cmd.Result);
-        }
-
-        public double GetMonthlyCost()
-        {
-            var cmd = new GetTotalSalarySumCommand(_repository);
-            return cmd.Result;
-        }
     }
 }

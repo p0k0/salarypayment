@@ -1,4 +1,8 @@
-﻿using AutoMapper;
+﻿using System.Net.NetworkInformation;
+using System.Reflection;
+using AutoMapper;
+using MediatR;
+using MediatR.Pipeline;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -6,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using salary.dal;
 using salary.dal.repository;
+using salary.host.handler;
 using salary.service;
 
 namespace salary.host.webapi
@@ -39,8 +44,9 @@ namespace salary.host.webapi
             services.AddTransient<IRepository, MySqlRepository>(c => new MySqlRepository(Configuration["DataBaseConnection:MySql"]));
             services.AddSingleton<IMapConfigureFactory, MapConfigureFactory>();
             services.AddSingleton<ISalaryService, SalaryService>();
-
             services.AddResponseCaching();
+            services.RegisteHostHandler();
+            services.AddMediatR(cfg => cfg.Using<Mediator>().AsSingleton(), typeof(Startup));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using salary.domain;
 
 namespace salary.service
@@ -7,7 +8,7 @@ namespace salary.service
     {
         EmployeeBase Get(string name);
         bool Save(salary.dto.Employee employee);
-        IEnumerable<EmployeeBase> GetMany(long limit, long offset);
+        IReadOnlyList<EmployeeBase> GetMany(long limit, long offset);
         EmployeeBase GetEmployeeWithMaxHourlyRate();
         double GetMonthlyCost();
     }

@@ -9,9 +9,11 @@
   <ItemGroup>
     <PackageReference Include="App.Metrics" Version="3.1.0" />
     <PackageReference Include="AutoMapper" Version="8.1.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.AspNetCore.ResponseCaching" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
     <PackageReference Include="MySql.Data" Version="8.0.17" />
     <PackageReference Include="System.Diagnostics.Tracing" Version="4.3.0" />
   </ItemGroup>
@@ -19,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\salary.domain\salary.domain.csproj" />
     <ProjectReference Include="..\salary.dto\salary.dto.csproj" />
+    <ProjectReference Include="..\salary.host.handler\salary.host.handler.csproj" />
     <ProjectReference Include="..\salary.host\salary.host.csproj" />
     <ProjectReference Include="..\salary.service\salary.service.csproj" />
     <ProjectReference Include="..\salary.dal.repository\salary.dal.repository.csproj" />

@@ -8,4 +8,8 @@
     <ProjectReference Include="..\salary.dto\salary.dto.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="7.0.0" />
+  </ItemGroup>
+
 </Project>
