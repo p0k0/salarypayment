@@ -19,6 +19,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "salary.host.webapi.dto", "s
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "salary.host", "salary.host\salary.host.csproj", "{F3B1F5A9-C9E7-46A7-96A8-663FF51E4F66}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "salary.host.handler", "salary.host.handler\salary.host.handler.csproj", "{7A930A92-839F-4B87-9C8A-A0D47601D9D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "salary.host.command", "salary.host.command\salary.host.command.csproj", "{B8326C86-C16F-45F3-8238-9B5410C0D427}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,5 +65,13 @@ Global
 		{F3B1F5A9-C9E7-46A7-96A8-663FF51E4F66}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3B1F5A9-C9E7-46A7-96A8-663FF51E4F66}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3B1F5A9-C9E7-46A7-96A8-663FF51E4F66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A930A92-839F-4B87-9C8A-A0D47601D9D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A930A92-839F-4B87-9C8A-A0D47601D9D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A930A92-839F-4B87-9C8A-A0D47601D9D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A930A92-839F-4B87-9C8A-A0D47601D9D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8326C86-C16F-45F3-8238-9B5410C0D427}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8326C86-C16F-45F3-8238-9B5410C0D427}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8326C86-C16F-45F3-8238-9B5410C0D427}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8326C86-C16F-45F3-8238-9B5410C0D427}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
