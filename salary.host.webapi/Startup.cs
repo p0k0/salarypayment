@@ -37,8 +37,8 @@ namespace salary.host.webapi
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddTransient<IRepository, MySqlRepository>(c => new MySqlRepository(Configuration["DataBaseConnection:MySql"]));
-            services.AddSingleton<ISalaryService, SalaryService>();
             services.AddSingleton<IMapConfigureFactory, MapConfigureFactory>();
+            services.AddSingleton<ISalaryService, SalaryService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

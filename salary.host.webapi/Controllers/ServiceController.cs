@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using salary.domain;
@@ -22,14 +23,16 @@ namespace salary.host.webapi.Controllers
             _mapper = new Mapper(config);
         }
         
+        [ResponseCache(Duration = 60)]
         // GET api/v1/service/employees/name
         [HttpGet("employees/{name}")]
-        public ActionResult<webapi.dto.Employee> GetEmployee([FromServices]ISalaryService service, string name)
+        public async Task<ActionResult<webapi.dto.Employee>> GetEmployee([FromServices]ISalaryService service, string name)
         {
             var employee = _mapper.Map<EmployeeBase, webapi.dto.Employee>(service.Get(name));
-            return Ok(employee);
+            return await Task.FromResult<ActionResult<webapi.dto.Employee>>(Ok(employee));
         }
         
+        [ResponseCache(Duration = 60)]
         // GET api/v1/service/employees
         [HttpGet("employees")]
         public ActionResult<IEnumerable<webapi.dto.Employee>> GetEmployees([FromServices]ISalaryService service, [FromQuery]long limit = 2, [FromQuery]long offset = 0)
@@ -38,6 +41,7 @@ namespace salary.host.webapi.Controllers
             return Ok(employees);
         }
         
+        [ResponseCache(Duration = 60)]
         //GET api/v1/service/rate/hourly/max
         [HttpGet("rate/hourly/max")]
         public ActionResult<webapi.dto.Employee> GetEmployeeWithMaxHourlyRate([FromServices]ISalaryService service)
@@ -46,6 +50,7 @@ namespace salary.host.webapi.Controllers
             return Ok(employee);
         }
         
+        [ResponseCache(Duration = 60)]
         //GET api/v1/service/salary/sum
         [HttpGet("salary/sum")]
         public ActionResult<double> GetTotalSalarySum([FromServices]ISalaryService service)
