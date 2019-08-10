@@ -2,7 +2,7 @@
 
 namespace salary.dto
 {
-    public class Employee
+    public class Employee//must be aggregate - because summarize both entity: employee and salary 
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
